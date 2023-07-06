@@ -47,6 +47,7 @@ namespace MVVMCalculator
         public ICommand DivideCommand { get; }
         public ICommand PowerCommand { get; }
         public ICommand SquareRootCommand { get; }
+        public ICommand PercentCommand { get; }
 
         public CalculatorViewModel()
         {
@@ -56,6 +57,7 @@ namespace MVVMCalculator
             DivideCommand = new RelayCommand(Divide);
             PowerCommand = new RelayCommand(Power);
             SquareRootCommand = new RelayCommand(SquareRoot);
+            PercentCommand = new RelayCommand(Percent);
         }
 
         private void Add()
@@ -137,6 +139,18 @@ namespace MVVMCalculator
                 {
                     Result = "Invalid input";
                 }
+            }
+            else
+            {
+                Result = "Invalid input";
+            }
+        }
+
+        private void Percent()
+        {
+            if (decimal.TryParse(FirstNumber, out decimal first) && decimal.TryParse(SecondNumber, out decimal second))
+            {
+                Result = ((first * second) / 100).ToString();
             }
             else
             {

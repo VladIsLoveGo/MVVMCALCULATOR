@@ -22,6 +22,7 @@
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="^" Width="50" Margin="5" Command="{Binding PowerCommand}"/>
             <Button Content="√" Width="50" Margin="5" Command="{Binding SquareRootCommand}"/>
+            <Button Content="%" Width="50" Margin="5" Command="{Binding PercentCommand}"/>
         </StackPanel>
         <TextBlock Grid.Row="4" Text="Result:" HorizontalAlignment="Center" Margin="10"/>
         <TextBlock Grid.Row="5" Text="{Binding Result}" HorizontalAlignment="Center" FontWeight="Bold" Margin="10"/>
