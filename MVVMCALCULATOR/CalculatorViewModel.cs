@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Runtime.ConstrainedExecution;
 using System.Windows.Input;
 
 namespace MVVMCalculator
@@ -51,6 +52,7 @@ namespace MVVMCalculator
         public ICommand SquareRootCommand { get; }
         public ICommand PercentCommand { get; }
         public ICommand DigitCommand { get; }
+        public ICommand ClearCommand { get; }
 
         public CalculatorViewModel()
         {
@@ -62,6 +64,7 @@ namespace MVVMCalculator
             SquareRootCommand = new RelayCommand(SquareRoot);
             PercentCommand = new RelayCommand(Percent);
             DigitCommand = new RelayCommand(Digit);
+            ClearCommand = new RelayCommand(Clear);
         }
 
         private void Add(object parameter)
@@ -74,6 +77,12 @@ namespace MVVMCalculator
             {
                 Result = "Invalid input";
             }
+        }
+        private void Clear(object parameter)
+        {
+            FirstOperand = "";
+            SecondOperand = "";
+            Result = "";
         }
 
         private void Subtract(object parameter)

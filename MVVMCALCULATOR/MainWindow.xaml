@@ -55,7 +55,10 @@
             <Button Content="√" Width="50" Height="50" Margin="5" Command="{Binding SquareRootCommand}" Grid.Row="4" Grid.Column="0"/>
             <Button Content="%" Width="50" Height="50" Margin="5" Command="{Binding PercentCommand}" Grid.Row="4" Grid.Column="1"/>
             <Button Content="^" Width="50" Height="50" Margin="5" Command="{Binding PowerCommand}" Grid.Row="4" Grid.Column="2"/>
-        </Grid>
+            <Button Content="Clear" Width="50" Height="50" Margin="5" Command="{Binding ClearCommand}" Grid.Row="4" Grid.Column="4"/>
+
+
+</Grid>
         <TextBox Text="{Binding FirstOperand}" Grid.Row="3" Grid.ColumnSpan="4" Height="50" Margin="10"/>
         <TextBox Text="{Binding SecondOperand}" Grid.Row="4" Grid.ColumnSpan="4" Height="50" Margin="10"/>
     </Grid>
