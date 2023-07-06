@@ -7,26 +7,28 @@ namespace MVVMCalculator
 {
     public class CalculatorViewModel : INotifyPropertyChanged
     {
-        private string _firstNumber;
-        private string _secondNumber;
+        private string _firstOperand;
+        private string _secondOperand;
         private string _result;
+        public string SelectedOperand { get; set; }
 
-        public string FirstNumber
+
+        public string FirstOperand
         {
-            get => _firstNumber;
+            get => _firstOperand;
             set
             {
-                _firstNumber = value;
+                _firstOperand = value;
                 OnPropertyChanged();
             }
         }
 
-        public string SecondNumber
+        public string SecondOperand
         {
-            get => _secondNumber;
+            get => _secondOperand;
             set
             {
-                _secondNumber = value;
+                _secondOperand = value;
                 OnPropertyChanged();
             }
         }
@@ -48,6 +50,7 @@ namespace MVVMCalculator
         public ICommand PowerCommand { get; }
         public ICommand SquareRootCommand { get; }
         public ICommand PercentCommand { get; }
+        public ICommand DigitCommand { get; }
 
         public CalculatorViewModel()
         {
@@ -58,11 +61,12 @@ namespace MVVMCalculator
             PowerCommand = new RelayCommand(Power);
             SquareRootCommand = new RelayCommand(SquareRoot);
             PercentCommand = new RelayCommand(Percent);
+            DigitCommand = new RelayCommand(Digit);
         }
 
-        private void Add()
+        private void Add(object parameter)
         {
-            if (decimal.TryParse(FirstNumber, out decimal first) && decimal.TryParse(SecondNumber, out decimal second))
+            if (decimal.TryParse(FirstOperand, out decimal first) && decimal.TryParse(SecondOperand, out decimal second))
             {
                 Result = (first + second).ToString();
             }
@@ -72,9 +76,9 @@ namespace MVVMCalculator
             }
         }
 
-        private void Subtract()
+        private void Subtract(object parameter)
         {
-            if (decimal.TryParse(FirstNumber, out decimal first) && decimal.TryParse(SecondNumber, out decimal second))
+            if (decimal.TryParse(FirstOperand, out decimal first) && decimal.TryParse(SecondOperand, out decimal second))
             {
                 Result = (first - second).ToString();
             }
@@ -84,9 +88,9 @@ namespace MVVMCalculator
             }
         }
 
-        private void Multiply()
+        private void Multiply(object parameter)
         {
-            if (decimal.TryParse(FirstNumber, out decimal first) && decimal.TryParse(SecondNumber, out decimal second))
+            if (decimal.TryParse(FirstOperand, out decimal first) && decimal.TryParse(SecondOperand, out decimal second))
             {
                 Result = (first * second).ToString();
             }
@@ -96,9 +100,9 @@ namespace MVVMCalculator
             }
         }
 
-        private void Divide()
+        private void Divide(object parameter)
         {
-            if (decimal.TryParse(FirstNumber, out decimal first) && decimal.TryParse(SecondNumber, out decimal second))
+            if (decimal.TryParse(FirstOperand, out decimal first) && decimal.TryParse(SecondOperand, out decimal second))
             {
                 if (second != 0)
                 {
@@ -115,9 +119,9 @@ namespace MVVMCalculator
             }
         }
 
-        private void Power()
+        private void Power(object parameter)
         {
-            if (decimal.TryParse(FirstNumber, out decimal first) && decimal.TryParse(SecondNumber, out decimal second))
+            if (decimal.TryParse(FirstOperand, out decimal first) && decimal.TryParse(SecondOperand, out decimal second))
             {
                 Result = Math.Pow((double)first, (double)second).ToString();
             }
@@ -127,9 +131,9 @@ namespace MVVMCalculator
             }
         }
 
-        private void SquareRoot()
+        private void SquareRoot(object parameter)
         {
-            if (decimal.TryParse(FirstNumber, out decimal first))
+            if (decimal.TryParse(FirstOperand, out decimal first))
             {
                 if (first >= 0)
                 {
@@ -146,15 +150,30 @@ namespace MVVMCalculator
             }
         }
 
-        private void Percent()
+        private void Percent(object parameter)
         {
-            if (decimal.TryParse(FirstNumber, out decimal first) && decimal.TryParse(SecondNumber, out decimal second))
+            if (decimal.TryParse(FirstOperand, out decimal first) && decimal.TryParse(SecondOperand, out decimal second))
             {
                 Result = ((first * second) / 100).ToString();
             }
             else
             {
                 Result = "Invalid input";
+            }
+        }
+
+        private void Digit(object parameter)
+        {
+            if (parameter is string digit)
+            {
+                if (SelectedOperand == null)
+                {
+                    FirstOperand += digit;
+                }
+                else
+                {
+                    SecondOperand += digit;
+                }
             }
         }
 
@@ -168,23 +187,34 @@ namespace MVVMCalculator
 
     public class RelayCommand : ICommand
     {
-        private readonly Action _execute;
+        private readonly Action<object> _execute;
+        private readonly Predicate<object> _canExecute;
 
-        public RelayCommand(Action execute)
+        public RelayCommand(Action<object> execute)
+            : this(execute, null)
         {
-            _execute = execute;
+        }
+
+        public RelayCommand(Action<object> execute, Predicate<object> canExecute)
+        {
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+            _canExecute = canExecute;
         }
 
         public bool CanExecute(object parameter)
         {
-            return true;
+            return _canExecute == null || _canExecute(parameter);
         }
 
         public void Execute(object parameter)
         {
-            _execute();
+            _execute(parameter);
         }
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
     }
 }

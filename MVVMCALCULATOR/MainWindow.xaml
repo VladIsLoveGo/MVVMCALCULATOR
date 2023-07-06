@@ -1,30 +1,62 @@
 ﻿<Window x:Class="MVVMCalculator.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MVVM Calculator" Height="300" Width="300">
+        Title="MVVM Calculator" Height="550" Width="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBox Grid.Row="0" Text="{Binding FirstNumber, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Width="150" Margin="10"/>
-        <TextBox Grid.Row="1" Text="{Binding SecondNumber, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Width="150" Margin="10"/>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="+" Width="50" Margin="5" Command="{Binding AddCommand}"/>
-            <Button Content="-" Width="50" Margin="5" Command="{Binding SubtractCommand}"/>
-            <Button Content="*" Width="50" Margin="5" Command="{Binding MultiplyCommand}"/>
-            <Button Content="/" Width="50" Margin="5" Command="{Binding DivideCommand}"/>
-        </StackPanel>
-        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
-            <Button Content="^" Width="50" Margin="5" Command="{Binding PowerCommand}"/>
-            <Button Content="√" Width="50" Margin="5" Command="{Binding SquareRootCommand}"/>
-            <Button Content="%" Width="50" Margin="5" Command="{Binding PercentCommand}"/>
-        </StackPanel>
-        <TextBlock Grid.Row="4" Text="Result:" HorizontalAlignment="Center" Margin="10"/>
-        <TextBlock Grid.Row="5" Text="{Binding Result}" HorizontalAlignment="Center" FontWeight="Bold" Margin="10"/>
+        <Grid Grid.Row="0" HorizontalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Result:" Margin="10"/>
+            <TextBlock Text="{Binding Result}" Grid.Column="1" HorizontalAlignment="Left" FontWeight="Bold" Margin="10"/>
+        </Grid>
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="7" Width="50" Height="50" Margin="5" Command="{Binding DigitCommand}" CommandParameter="7" Grid.Row="0" Grid.Column="0"/>
+            <Button Content="8" Width="50" Height="50" Margin="5" Command="{Binding DigitCommand}" CommandParameter="8" Grid.Row="0" Grid.Column="1"/>
+            <Button Content="9" Width="50" Height="50" Margin="5" Command="{Binding DigitCommand}" CommandParameter="9" Grid.Row="0" Grid.Column="2"/>
+            <Button Content="/" Width="50" Height="50" Margin="5" Command="{Binding DivideCommand}" Grid.Row="0" Grid.Column="3"/>
+
+            <Button Content="4" Width="50" Height="50" Margin="5" Command="{Binding DigitCommand}" CommandParameter="4" Grid.Row="1" Grid.Column="0"/>
+            <Button Content="5" Width="50" Height="50" Margin="5" Command="{Binding DigitCommand}" CommandParameter="5" Grid.Row="1" Grid.Column="1"/>
+            <Button Content="6" Width="50" Height="50" Margin="5" Command="{Binding DigitCommand}" CommandParameter="6" Grid.Row="1" Grid.Column="2"/>
+            <Button Content="*" Width="50" Height="50" Margin="5" Command="{Binding MultiplyCommand}" Grid.Row="1" Grid.Column="3"/>
+
+            <Button Content="1" Width="50" Height="50" Margin="5" Command="{Binding DigitCommand}" CommandParameter="1" Grid.Row="2" Grid.Column="0"/>
+            <Button Content="2" Width="50" Height="50" Margin="5" Command="{Binding DigitCommand}" CommandParameter="2" Grid.Row="2" Grid.Column="1"/>
+            <Button Content="3" Width="50" Height="50" Margin="5" Command="{Binding DigitCommand}" CommandParameter="3" Grid.Row="2" Grid.Column="2"/>
+            <Button Content="-" Width="50" Height="50" Margin="5" Command="{Binding SubtractCommand}" Grid.Row="2" Grid.Column="3"/>
+
+            <Button Content="0" Width="50" Height="50" Margin="5" Command="{Binding DigitCommand}" CommandParameter="0" Grid.Row="3" Grid.Column="0"/>
+            <Button Content="." Width="50" Height="50" Margin="5" Command="{Binding DecimalPointCommand}" Grid.Row="3" Grid.Column="1"/>
+            <Button Content="+" Width="50" Height="50" Margin="5" Command="{Binding AddCommand}" Grid.Row="3" Grid.Column="2"/>
+            <Button Content="=" Width="50" Height="50" Margin="5" Command="{Binding EqualsCommand}" Grid.Row="3" Grid.Column="3"/>
+
+            <Button Content="√" Width="50" Height="50" Margin="5" Command="{Binding SquareRootCommand}" Grid.Row="4" Grid.Column="0"/>
+            <Button Content="%" Width="50" Height="50" Margin="5" Command="{Binding PercentCommand}" Grid.Row="4" Grid.Column="1"/>
+            <Button Content="^" Width="50" Height="50" Margin="5" Command="{Binding PowerCommand}" Grid.Row="4" Grid.Column="2"/>
+        </Grid>
+        <TextBox Text="{Binding FirstOperand}" Grid.Row="3" Grid.ColumnSpan="4" Height="50" Margin="10"/>
+        <TextBox Text="{Binding SecondOperand}" Grid.Row="4" Grid.ColumnSpan="4" Height="50" Margin="10"/>
     </Grid>
 </Window>
