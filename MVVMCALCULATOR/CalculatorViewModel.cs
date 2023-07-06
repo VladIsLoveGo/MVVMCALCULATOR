@@ -53,6 +53,8 @@ namespace MVVMCalculator
         public ICommand PercentCommand { get; }
         public ICommand DigitCommand { get; }
         public ICommand ClearCommand { get; }
+        public ICommand CommaCommand { get; }
+
 
         public CalculatorViewModel()
         {
@@ -65,6 +67,7 @@ namespace MVVMCalculator
             PercentCommand = new RelayCommand(Percent);
             DigitCommand = new RelayCommand(Digit);
             ClearCommand = new RelayCommand(Clear);
+            CommaCommand = new RelayCommand(Comma);
         }
 
         private void Add(object parameter)
@@ -76,6 +79,23 @@ namespace MVVMCalculator
             else
             {
                 Result = "Invalid input";
+            }
+        }
+        private void Comma(object parameter)
+        {
+            if (SelectedOperand == null)
+            {
+                if (!FirstOperand.Contains(","))
+                {
+                    FirstOperand += ",";
+                }
+            }
+            else
+            {
+                if (!SecondOperand.Contains(","))
+                {
+                    SecondOperand += ",";
+                }
             }
         }
         private void Clear(object parameter)

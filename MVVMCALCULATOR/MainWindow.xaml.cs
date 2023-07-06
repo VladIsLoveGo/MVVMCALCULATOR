@@ -9,5 +9,10 @@ namespace MVVMCalculator
             InitializeComponent();
             DataContext = new CalculatorViewModel();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
