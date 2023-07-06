@@ -9,6 +9,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBox Grid.Row="0" Text="{Binding FirstNumber, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Width="150" Margin="10"/>
         <TextBox Grid.Row="1" Text="{Binding SecondNumber, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" Width="150" Margin="10"/>
@@ -18,7 +19,11 @@
             <Button Content="*" Width="50" Margin="5" Command="{Binding MultiplyCommand}"/>
             <Button Content="/" Width="50" Margin="5" Command="{Binding DivideCommand}"/>
         </StackPanel>
-        <TextBlock Grid.Row="3" Text="Result:" HorizontalAlignment="Center" Margin="10"/>
-        <TextBlock Grid.Row="4" Text="{Binding Result}" HorizontalAlignment="Center" FontWeight="Bold" Margin="10"/>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
+            <Button Content="^" Width="50" Margin="5" Command="{Binding PowerCommand}"/>
+            <Button Content="√" Width="50" Margin="5" Command="{Binding SquareRootCommand}"/>
+        </StackPanel>
+        <TextBlock Grid.Row="4" Text="Result:" HorizontalAlignment="Center" Margin="10"/>
+        <TextBlock Grid.Row="5" Text="{Binding Result}" HorizontalAlignment="Center" FontWeight="Bold" Margin="10"/>
     </Grid>
 </Window>

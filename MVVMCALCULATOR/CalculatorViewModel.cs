@@ -45,6 +45,8 @@ namespace MVVMCalculator
         public ICommand SubtractCommand { get; }
         public ICommand MultiplyCommand { get; }
         public ICommand DivideCommand { get; }
+        public ICommand PowerCommand { get; }
+        public ICommand SquareRootCommand { get; }
 
         public CalculatorViewModel()
         {
@@ -52,6 +54,8 @@ namespace MVVMCalculator
             SubtractCommand = new RelayCommand(Subtract);
             MultiplyCommand = new RelayCommand(Multiply);
             DivideCommand = new RelayCommand(Divide);
+            PowerCommand = new RelayCommand(Power);
+            SquareRootCommand = new RelayCommand(SquareRoot);
         }
 
         private void Add()
@@ -101,6 +105,37 @@ namespace MVVMCalculator
                 else
                 {
                     Result = "Cannot divide by zero";
+                }
+            }
+            else
+            {
+                Result = "Invalid input";
+            }
+        }
+
+        private void Power()
+        {
+            if (decimal.TryParse(FirstNumber, out decimal first) && decimal.TryParse(SecondNumber, out decimal second))
+            {
+                Result = Math.Pow((double)first, (double)second).ToString();
+            }
+            else
+            {
+                Result = "Invalid input";
+            }
+        }
+
+        private void SquareRoot()
+        {
+            if (decimal.TryParse(FirstNumber, out decimal first))
+            {
+                if (first >= 0)
+                {
+                    Result = Math.Sqrt((double)first).ToString();
+                }
+                else
+                {
+                    Result = "Invalid input";
                 }
             }
             else
